@@ -1,0 +1,11 @@
+note over browser:
+browser uses the javascript code
+fetched from the server and
+executes the event handler
+that creates a new note and
+adds it to the notes list then
+rerenders the note list on the page
+and sends the new note to the 
+server in JSON-string format
+end note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
