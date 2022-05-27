@@ -12,6 +12,7 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(new Uint8Array(7));
 
   const getRandom = (min, max) => {
     min = Math.ceil(min);
@@ -20,12 +21,23 @@ const App = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
+  const updateAnecdote = () => {
+    let index = getRandom(0, 6);
+    setSelected(index);
+  };
+
+  const voteAnecdonte = () => {
+    const copy = [...votes];
+    copy[selected] += 1;
+    setVotes(copy);
+  };
+
   return (
     <div>
       <div>{anecdotes[selected]}</div>
-      <button onClick={() => setSelected(getRandom(0, 6))}>
-        next anecdote
-      </button>
+      <div>has {votes[selected]} votes</div>
+      <button onClick={voteAnecdonte}>vote</button>
+      <button onClick={updateAnecdote}>next anecdote</button>
     </div>
   );
 };
