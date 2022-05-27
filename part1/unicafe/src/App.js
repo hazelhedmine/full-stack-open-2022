@@ -1,5 +1,20 @@
 import { useState } from "react";
 
+const StatisticLine = (props) => {
+  if (props.text === "positive") {
+    return (
+      <p>
+        {props.text} {props.value}%
+      </p>
+    );
+  }
+  return (
+    <p>
+      {props.text} {props.value}
+    </p>
+  );
+};
+
 const Statistics = (props) => {
   const good = props.good;
   const neutral = props.neutral;
@@ -11,7 +26,6 @@ const Statistics = (props) => {
   if (feedback === 0) {
     return (
       <div>
-        <h1>statistics</h1>
         <p>No feedback given</p>
       </div>
     );
@@ -19,16 +33,19 @@ const Statistics = (props) => {
 
   return (
     <div>
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {feedback}</p>
-      <p>average {average}</p>
-      <p>positive {positive * 100}%</p>
+      <StatisticLine text="good" value={good}></StatisticLine>
+      <StatisticLine text="neutral" value={neutral}></StatisticLine>
+      <StatisticLine text="bad" value={bad}></StatisticLine>
+      <StatisticLine text="all" value={feedback}></StatisticLine>
+      <StatisticLine text="average" value={average}></StatisticLine>
+      <StatisticLine text="positive" value={positive * 100}></StatisticLine>
     </div>
   );
 };
+
+const Button = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+);
 
 const App = () => {
   // save clicks of each button to its own state
@@ -67,9 +84,10 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleGoodClick}>good</button>
-      <button onClick={handleNeutralClick}>neutral</button>
-      <button onClick={handleBadClick}>bad</button>
+      <Button handleClick={handleGoodClick} text="good"></Button>
+      <Button handleClick={handleNeutralClick} text="neutral"></Button>
+      <Button handleClick={handleBadClick} text="bad"></Button>
+      <h1>statistics</h1>
       <Statistics
         good={good}
         neutral={neutral}
