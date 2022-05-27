@@ -3,15 +3,18 @@ import { useState } from "react";
 const StatisticLine = (props) => {
   if (props.text === "positive") {
     return (
-      <p>
-        {props.text} {props.value}%
-      </p>
+      <tr>
+        <td>{props.text}</td>
+        <td>{props.value}%</td>
+      </tr>
     );
   }
+
   return (
-    <p>
-      {props.text} {props.value}
-    </p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
@@ -32,14 +35,16 @@ const Statistics = (props) => {
   }
 
   return (
-    <div>
-      <StatisticLine text="good" value={good}></StatisticLine>
-      <StatisticLine text="neutral" value={neutral}></StatisticLine>
-      <StatisticLine text="bad" value={bad}></StatisticLine>
-      <StatisticLine text="all" value={feedback}></StatisticLine>
-      <StatisticLine text="average" value={average}></StatisticLine>
-      <StatisticLine text="positive" value={positive * 100}></StatisticLine>
-    </div>
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={good}></StatisticLine>
+        <StatisticLine text="neutral" value={neutral}></StatisticLine>
+        <StatisticLine text="bad" value={bad}></StatisticLine>
+        <StatisticLine text="all" value={feedback}></StatisticLine>
+        <StatisticLine text="average" value={average}></StatisticLine>
+        <StatisticLine text="positive" value={positive * 100}></StatisticLine>
+      </tbody>
+    </table>
   );
 };
 
@@ -62,23 +67,23 @@ const App = () => {
     setGood(good + 1);
     setFeedback(feedback + 1);
     setScore(score + 1);
-    setAverage(score / feedback);
-    setPositive(good / feedback);
+    setAverage((score + 1) / (feedback + 1));
+    setPositive((good + 1) / (feedback + 1));
   };
 
   const handleNeutralClick = () => {
     setNeutral(neutral + 1);
     setFeedback(feedback + 1);
-    setAverage(score / feedback);
-    setPositive(good / feedback);
+    setAverage(score / (feedback + 1));
+    setPositive(good / (feedback + 1));
   };
 
   const handleBadClick = () => {
     setBad(bad + 1);
     setFeedback(feedback + 1);
     setScore(score - 1);
-    setAverage(score / feedback);
-    setPositive(good / feedback);
+    setAverage((score - 1) / (feedback + 1));
+    setPositive(good / (feedback + 1));
   };
 
   return (
