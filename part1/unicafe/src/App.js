@@ -8,6 +8,15 @@ const Statistics = (props) => {
   const average = props.average;
   const positive = props.positive;
 
+  if (feedback === 0) {
+    return (
+      <div>
+        <h1>statistics</h1>
+        <p>No feedback given</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>statistics</h1>
