@@ -14,10 +14,21 @@ const Part = ({ part }) => {
 const Content = ({ parts }) => {
   console.log("parts :>> ", parts);
 
-  let sum = 0;
-  parts.map((part) => {
-    sum += part.exercises;
-  });
+  const sum = parts.reduce((previousValue, currentValue) => {
+    console.log("sum :>> ", previousValue, currentValue);
+    /*
+     * the below code gives error cause from the 2nd iteration onwards
+     * previousValue is a number, so .exercises gives nothing
+     * hence it will return NaN
+     * instead, should initialise an initial number (0 in this case)
+     * and change previousValue to be a number
+     */
+    //return previousValue.exercises + currentValue.exercises;
+
+    return previousValue + currentValue.exercises;
+  }, 0);
+
+  console.log("final sum :>> ", sum);
 
   return (
     <>
