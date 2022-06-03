@@ -2,6 +2,7 @@ import React from "react";
 
 const CountryInfo = ({ country }) => {
   console.log("country :>> ", country);
+
   return (
     <div>
       <h2>{country.name.common}</h2>

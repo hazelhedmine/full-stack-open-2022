@@ -3,7 +3,12 @@ import { useState } from "react";
 
 import CountryInfo from "./CountryInfo";
 
-const Country = ({ country }) => {
+const Country = ({
+  country,
+  countryWeather,
+  handleLatChange,
+  handleLonChange,
+}) => {
   console.log("country :>> ", country);
   const [showInfo, setShowInfo] = useState(false);
 
@@ -13,6 +18,7 @@ const Country = ({ country }) => {
     }
     setShowInfo(!showInfo);
   };
+
   return (
     <div>
       <p>
@@ -25,7 +31,14 @@ const Country = ({ country }) => {
         </button>
       </p>
       <div>
-        {showInfo ? <CountryInfo country={country}></CountryInfo> : null}
+        {showInfo ? (
+          <CountryInfo
+            country={country}
+            countryWeather={countryWeather}
+            handleLatChange={handleLatChange}
+            handleLonChange={handleLonChange}
+          ></CountryInfo>
+        ) : null}
       </div>
     </div>
   );
