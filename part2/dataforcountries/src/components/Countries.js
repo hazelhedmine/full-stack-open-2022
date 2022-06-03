@@ -1,4 +1,8 @@
 import React from "react";
+import { useState } from "react";
+
+import Country from "./Country";
+import CountryInfo from "./CountryInfo";
 
 const Countries = ({ countries, findCountries }) => {
   if (!findCountries) {
@@ -14,27 +18,15 @@ const Countries = ({ countries, findCountries }) => {
   if (countriesToShow.length > 10) {
     return <p>Too many matches, specify another filter.</p>;
   } else if (countriesToShow.length === 1) {
-    const country = countriesToShow[0];
-    return (
-      <div>
-        <h2>{country.name.common}</h2>
-        <p>capital {country.capital}</p>
-        <p>area {country.area}</p>
-        <b>languages:</b>
-        <ul>
-          {Object.values(country.languages).map((language) => (
-            <li key={language}>{language}</li>
-          ))}
-        </ul>
-        <img src={country.flags.png} alt="Flag"></img>
-      </div>
-    );
+    return <CountryInfo country={countriesToShow[0]}></CountryInfo>;
   }
 
   return (
     <div>
       {countriesToShow.map((country) => (
-        <p key={country.name.common}>{country.name.common}</p>
+        <div key={country.name.common}>
+          <Country country={country}></Country>
+        </div>
       ))}
     </div>
   );
