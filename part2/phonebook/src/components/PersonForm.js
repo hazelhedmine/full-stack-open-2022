@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import numbers from "../services/numbers";
 
 const PersonForm = ({
   persons,
@@ -25,14 +25,11 @@ const PersonForm = ({
 
     console.log("personObject :>> ", personObject);
 
-    axios
-      .post("http://localhost:3001/persons", personObject)
-      .then((response) => {
-        console.log(response);
-        setPersons(persons.concat(personObject));
-        setNewName("");
-        setNewNumber("");
-      });
+    numbers.create(personObject).then((returnedPerson) => {
+      setPersons(persons.concat(returnedPerson));
+      setNewName("");
+      setNewNumber("");
+    });
   };
 
   const handleNameChange = (event) => {
