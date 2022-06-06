@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [filterName, setFilterName] = useState("");
   const [message, setMessage] = useState(null);
+  const [style, setStyle] = useState("");
 
   useEffect(() => {
     console.log("effect");
@@ -23,7 +24,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message}></Notification>
+      <Notification message={message} style={style}></Notification>
       <Filter filterName={filterName} setFilterName={setFilterName}></Filter>
       <h3>Add a New</h3>
       <PersonForm
@@ -34,6 +35,7 @@ const App = () => {
         setNewName={setNewName}
         setNewNumber={setNewNumber}
         setMessage={setMessage}
+        setStyle={setStyle}
       ></PersonForm>
       <h3>Numbers</h3>
       <Persons

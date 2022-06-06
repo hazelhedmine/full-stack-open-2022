@@ -9,6 +9,7 @@ const PersonForm = ({
   setNewName,
   setNewNumber,
   setMessage,
+  setStyle,
 }) => {
   const addPerson = (event) => {
     event.preventDefault();
@@ -21,13 +22,25 @@ const PersonForm = ({
         )
       ) {
         const updatedPerson = { ...person, number: newNumber };
-        numbers.update(person.id, updatedPerson).then((returnedPerson) => {
-          setPersons(
-            persons.map((person) =>
-              person.name !== newName ? person : returnedPerson
-            )
-          );
-        });
+        numbers
+          .update(person.id, updatedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.name !== newName ? person : returnedPerson
+              )
+            );
+          })
+          .catch((error) => {
+            setMessage(
+              `Information of '${person.name}' was already removed from server`
+            );
+            setStyle("errorMessage");
+            setPersons(persons.filter((p) => p.name !== person.name));
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000); //5s
+          });
       }
 
       return;
@@ -45,6 +58,7 @@ const PersonForm = ({
       setNewName("");
       setNewNumber("");
       setMessage(`Added ${newName}`);
+      setStyle("successMessage");
       setTimeout(() => {
         setMessage(null);
       }, 5000); //5s
