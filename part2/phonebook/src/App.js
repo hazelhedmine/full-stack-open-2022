@@ -12,9 +12,9 @@ const App = () => {
 
   useEffect(() => {
     console.log("effect");
-    numbers.getAll().then((initialNotes) => {
+    numbers.getAll().then((initialPersons) => {
       console.log("promise fulfilled");
-      setPersons(initialNotes);
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -32,7 +32,11 @@ const App = () => {
         setNewNumber={setNewNumber}
       ></PersonForm>
       <h3>Numbers</h3>
-      <Persons persons={persons} filterName={filterName}></Persons>
+      <Persons
+        persons={persons}
+        setPersons={setPersons}
+        filterName={filterName}
+      ></Persons>
     </div>
   );
 };

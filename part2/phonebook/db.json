@@ -16,19 +16,9 @@
       "id": 3
     },
     {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "hazel",
-      "number": "123",
-      "id": 5
-    },
-    {
       "name": "test",
-      "number": "431412",
-      "id": 6
+      "number": "123",
+      "id": 7
     }
   ]
 }
