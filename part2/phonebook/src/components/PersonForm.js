@@ -13,8 +13,22 @@ const PersonForm = ({
     event.preventDefault();
 
     if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`);
-      console.log("Already Added :>> ", newName);
+      const person = persons.find((n) => n.name === newName);
+      if (
+        window.confirm(
+          `${person.name} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const updatedPerson = { ...person, number: newNumber };
+        numbers.update(person.id, updatedPerson).then((returnedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.name !== newName ? person : returnedPerson
+            )
+          );
+        });
+      }
+
       return;
     }
 
