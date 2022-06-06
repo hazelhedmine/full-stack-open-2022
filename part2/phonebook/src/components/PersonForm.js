@@ -8,6 +8,7 @@ const PersonForm = ({
   setPersons,
   setNewName,
   setNewNumber,
+  setMessage,
 }) => {
   const addPerson = (event) => {
     event.preventDefault();
@@ -43,6 +44,10 @@ const PersonForm = ({
       setPersons(persons.concat(returnedPerson));
       setNewName("");
       setNewNumber("");
+      setMessage(`Added ${newName}`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000); //5s
     });
   };
 
