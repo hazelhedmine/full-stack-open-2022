@@ -53,16 +53,26 @@ const PersonForm = ({
 
     console.log("personObject :>> ", personObject);
 
-    numbers.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-      setMessage(`Added ${newName}`);
-      setStyle("successMessage");
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000); //5s
-    });
+    numbers
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+        setMessage(`Added ${newName}`);
+        setStyle("successMessage");
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000); //5s
+      })
+      .catch((error) => {
+        console.log("error.response.data :>> ", error.response.data);
+        setMessage(error.response.data.error);
+        setStyle("errorMessage");
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000); //5s
+      });
   };
 
   const handleNameChange = (event) => {
