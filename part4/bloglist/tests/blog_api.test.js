@@ -113,6 +113,43 @@ describe('deletion of a blog', () => {
   })
 })
 
+describe('updating of a blog', () => {
+  test('succeeds with status code 201 if id is valid', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const updatedBlog = {
+      title: 'test123',
+      author: 'test',
+      url: 'test',
+      likes: 10,
+    }
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updatedBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd[0].title).toEqual('test123')
+  })
+
+  test('fails if id is invalid', async () => {
+    const updatedBlog = {
+      title: 'test123',
+      author: 'test',
+      url: 'test',
+      likes: 10,
+    }
+
+    await api.put(`/api/blogs/1`).send(updatedBlog).expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd[0].title).toEqual('React patterns')
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
