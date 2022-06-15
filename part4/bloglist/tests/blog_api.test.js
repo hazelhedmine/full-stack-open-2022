@@ -32,6 +32,27 @@ test('blogs added have id property', async () => {
   expect(ids).toBeDefined()
 })
 
+test('blog is successfully added', async () => {
+  const newBlog = {
+    title: 'test',
+    author: 'testn',
+    url: 'test',
+    likes: 5,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const titles = blogsAtEnd.map((n) => n.title)
+  expect(titles).toContain('test')
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
