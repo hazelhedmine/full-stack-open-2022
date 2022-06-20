@@ -22,9 +22,11 @@ mongoose
 
 app.use(cors())
 app.use(express.json())
+// using middleware in all routes
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
+// use middleware only in /api/smth routes
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
