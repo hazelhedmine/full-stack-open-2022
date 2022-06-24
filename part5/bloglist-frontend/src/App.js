@@ -61,6 +61,7 @@ const App = () => {
   }
 
   const handleLogout = (event) => {
+    event.preventDefault()
     window.localStorage.removeItem('loggedBlogappUser')
 
     setUser(null)
@@ -103,7 +104,7 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage('Field(s) missing')
         setMessageType('error')
         setTimeout(() => {
@@ -115,7 +116,7 @@ const App = () => {
   const updateBlog = (blogObject, id, title, author) => {
     blogService
       .update(id, blogObject)
-      .then((returnedBlog) => {
+      .then(() => {
         setBlogs(blogs.map((b) => (b.id !== blogObject.id ? b : blogObject)))
         setErrorMessage(`${title} by ${author} updated!`)
         setMessageType('success')
@@ -123,7 +124,7 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage('update failed')
         setMessageType('error')
         setTimeout(() => {
@@ -135,7 +136,7 @@ const App = () => {
   const removeBlog = (id, title, author) => {
     blogService
       .remove(id)
-      .then((returnedBlog) => {
+      .then(() => {
         setBlogs(blogs.filter((b) => b.id !== id))
         setErrorMessage(`${title} by ${author} removed!`)
         setMessageType('success')
@@ -143,7 +144,7 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage('removal failed')
         setMessageType('error')
         setTimeout(() => {
