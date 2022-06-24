@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ user, blog, updateBlog }) => {
   const [visible, setVisible] = useState(false)
 
   const showWhenVisible = { display: visible ? '' : 'none' }
@@ -19,9 +19,9 @@ const Blog = ({ blog, updateBlog }) => {
 
   const handleLike = (event) => {
     event.preventDefault()
-    console.log('user :>> ', blog.user)
+    console.log('user :>> ', user)
     const blogObject = {
-      user: blog.user.id,
+      user: user.id,
       likes: blog.likes + 1,
       author: blog.author,
       title: blog.title,
@@ -45,7 +45,7 @@ const Blog = ({ blog, updateBlog }) => {
         <div>
           likes {blog.likes} <button onClick={handleLike}>like</button>
         </div>
-        <div>{blog.user.name}</div>
+        <div>{user.name}</div>
       </div>
     </div>
   )

@@ -13,6 +13,7 @@ const BlogForm = ({ user, addBlog }) => {
       author: author,
       url: URL,
       user: user,
+      likes: 0,
     }
 
     addBlog(blogObject, title, author)
