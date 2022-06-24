@@ -112,6 +112,26 @@ const App = () => {
       })
   }
 
+  const updateBlog = (blogObject, id, title, author) => {
+    blogService
+      .update(id, blogObject)
+      .then((returnedBlog) => {
+        setBlogs(blogs.map((b) => (b.id !== blogObject.id ? b : blogObject)))
+        setErrorMessage(`${title} by ${author} updated!`)
+        setMessageType('success')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+      .catch((error) => {
+        setErrorMessage('update failed')
+        setMessageType('error')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+  }
+
   return (
     <div>
       <Notification message={errorMessage} type={messageType} />
@@ -131,7 +151,12 @@ const App = () => {
             <BlogForm user={user} addBlog={addBlog}></BlogForm>
           </Togglable>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog
+              key={blog.id}
+              user={user}
+              blog={blog}
+              updateBlog={updateBlog}
+            />
           ))}
         </div>
       )}
