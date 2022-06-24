@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -16,6 +18,8 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [messageType, setMessageType] = useState('')
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -104,6 +108,7 @@ const App = () => {
       .create(blogObject)
       .then((returnedBlog) => {
         setBlogs(blogs.concat(returnedBlog))
+        blogFormRef.current.toggleVisibility()
         setErrorMessage(`a new blog ${title} by ${author} added!`)
         setMessageType('success')
         setTitle('')
@@ -122,43 +127,6 @@ const App = () => {
       })
   }
 
-  const blogForm = () => (
-    <form onSubmit={handleAddBlog}>
-      <h2>create new</h2>
-      <div>
-        title:
-        <input
-          type="text"
-          value={title}
-          name="title"
-          onChange={({ target }) => setTitle(target.value)}
-          required
-        ></input>
-      </div>
-      <div>
-        author:
-        <input
-          type="text"
-          value={author}
-          name="author"
-          onChange={({ target }) => setAuthor(target.value)}
-          required
-        ></input>
-      </div>
-      <div>
-        url:
-        <input
-          type="text"
-          value={URL}
-          name="URL"
-          onChange={({ target }) => setURL(target.value)}
-          required
-        ></input>
-      </div>
-      <button type="submit">create</button>
-    </form>
-  )
-
   return (
     <div>
       <Notification message={errorMessage} type={messageType} />
@@ -174,7 +142,17 @@ const App = () => {
               logout
             </button>
           </p>
-          {blogForm()}
+          <Togglable buttonLabel="new note" ref={blogFormRef}>
+            <BlogForm
+              handleAddBlog={handleAddBlog}
+              title={title}
+              setTitle={setTitle}
+              author={author}
+              setAuthor={setAuthor}
+              URL={URL}
+              setURL={setURL}
+            ></BlogForm>
+          </Togglable>
           {blogs.map((blog) => (
             <Blog key={blog.id} blog={blog} />
           ))}
