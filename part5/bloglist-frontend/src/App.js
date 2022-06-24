@@ -132,6 +132,26 @@ const App = () => {
       })
   }
 
+  const removeBlog = (id, title, author) => {
+    blogService
+      .remove(id)
+      .then((returnedBlog) => {
+        setBlogs(blogs.filter((b) => b.id !== id))
+        setErrorMessage(`${title} by ${author} removed!`)
+        setMessageType('success')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+      .catch((error) => {
+        setErrorMessage('removal failed')
+        setMessageType('error')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+  }
+
   return (
     <div>
       <Notification message={errorMessage} type={messageType} />
@@ -158,6 +178,7 @@ const App = () => {
                 user={user}
                 blog={blog}
                 updateBlog={updateBlog}
+                removeBlog={removeBlog}
               />
             ))}
         </div>
