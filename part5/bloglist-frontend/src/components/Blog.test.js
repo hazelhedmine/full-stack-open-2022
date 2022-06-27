@@ -38,7 +38,9 @@ describe('<Togglable />', () => {
       url: 'www.123.com',
     }
 
-    const user = userEvent.setup()
+    const user = {
+      name: 'test',
+    }
     container = render(<Blog user={user} blog={blog}></Blog>).container
   })
 
@@ -51,14 +53,14 @@ describe('<Togglable />', () => {
     expect(div).toHaveStyle('display: none')
   })
 
-  //   test('after clicking the button, children are displayed', async () => {
-  //     const user = userEvent.setup()
-  //     const button = screen.getByText('show...')
-  //     await user.click(button)
+  test('after clicking the button, children are displayed', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('view')
+    await user.click(button)
 
-  //     const div = container.querySelector('.togglableContent')
-  //     expect(div).not.toHaveStyle('display: none')
-  //   })
+    const div = container.querySelector('.togglableBlog')
+    expect(div).not.toHaveStyle('display: none')
+  })
 
   //   test('toggled content can be closed', async () => {
   //     const user = userEvent.setup()
