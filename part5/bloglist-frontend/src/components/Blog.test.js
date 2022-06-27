@@ -29,19 +29,28 @@ import Blog from './Blog'
 
 describe('<Togglable />', () => {
   let container
+  let updateBlog
 
   beforeEach(() => {
+    const user = {
+      id: '62b02c99bb2bc6bb96d41b6c',
+      name: 'testtoken',
+      username: 'testtoken',
+    }
+
     const blog = {
       title: 'hello testing renders content',
       author: 'author',
-      likes: 1,
+      likes: 10,
       url: 'www.123.com',
+      user: user,
     }
 
-    const user = {
-      name: 'test',
-    }
-    container = render(<Blog user={user} blog={blog}></Blog>).container
+    updateBlog = jest.fn()
+
+    container = render(
+      <Blog user={user} blog={blog} updateBlog={updateBlog}></Blog>
+    ).container
   })
 
   test('renders its children', () => {
@@ -62,15 +71,15 @@ describe('<Togglable />', () => {
     expect(div).not.toHaveStyle('display: none')
   })
 
-  //   test('toggled content can be closed', async () => {
-  //     const user = userEvent.setup()
-  //     const button = screen.getByText('show...')
-  //     await user.click(button)
+  test('when like button is clicked twice, event handler is called twice', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('like')
+    await user.click(button)
+    await user.click(button)
 
-  //     const closeButton = screen.getByText('cancel')
-  //     await user.click(closeButton)
-
-  //     const div = container.querySelector('.togglableContent')
-  //     expect(div).toHaveStyle('display: none')
-  //   })
+    expect(updateBlog.mock.calls).toHaveLength(2)
+    // cannot use the below since likes is not actually updated
+    // so its just 10 + 1 each time
+    // expect(updateBlog.mock.calls[0][0].likes).toBe(12)
+  })
 })
