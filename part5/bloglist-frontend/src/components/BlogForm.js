@@ -15,7 +15,7 @@ const BlogForm = ({ user, addBlog }) => {
       user: user,
       likes: 0,
     }
-
+    console.log('blogObject :>> ', blogObject)
     addBlog(blogObject, title, author)
     setTitle('')
     setAuthor('')
@@ -23,9 +23,9 @@ const BlogForm = ({ user, addBlog }) => {
   }
 
   return (
-    <form onSubmit={handleAddBlog}>
+    <form className="blogForm" onSubmit={handleAddBlog}>
       <h2>create new</h2>
-      <div>
+      <div className="blogFormTitle">
         title:
         <input
           type="text"
@@ -35,7 +35,7 @@ const BlogForm = ({ user, addBlog }) => {
           required
         ></input>
       </div>
-      <div>
+      <div className="blogFormAuthor">
         author:
         <input
           type="text"
@@ -45,7 +45,7 @@ const BlogForm = ({ user, addBlog }) => {
           required
         ></input>
       </div>
-      <div>
+      <div className="blogFormURL">
         url:
         <input
           type="text"
