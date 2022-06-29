@@ -82,5 +82,34 @@ describe('Blog app', function () {
         cy.get('.blog-list').should('not.contain', 'another blog cypress')
       })
     })
+
+    describe('and multiple notes exist', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'least liked',
+          author: 'cypress1',
+          url: 'www.cypress1.com',
+        })
+        cy.createBlog({
+          title: 'most liked',
+          author: 'cypress1',
+          url: 'www.cypress1.com',
+        })
+      })
+
+      it('notes are ordered according to number of likes', function () {
+        cy.get('.blog').eq(0).should('contain', 'least liked')
+        cy.get('.blog').eq(1).should('contain', 'most liked')
+
+        cy.contains('most liked').contains('view').click()
+        cy.contains('most liked').get('.blogLikes').contains('likes 0')
+        cy.contains('most liked').find('.like-btn').click()
+        cy.contains('most liked').get('.blogLikes').contains('likes 1')
+        cy.get('.blog-list').contains('most liked').contains('hide').click()
+
+        cy.get('.blog').eq(0).should('contain', 'most liked')
+        cy.get('.blog').eq(1).should('contain', 'least liked')
+      })
+    })
   })
 })
