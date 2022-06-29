@@ -60,5 +60,22 @@ describe('Blog app', function () {
         ) // true
       })
     })
+
+    describe('and a note exists', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'another blog cypress',
+          author: 'cypress1',
+          url: 'www.cypress1.com',
+        })
+      })
+
+      it('it can be liked', function () {
+        cy.contains('another blog cypress').contains('view').click()
+        cy.get('.blogLikes').contains('likes 0')
+        cy.get('.like-btn').click()
+        cy.get('.blogLikes').contains('likes 1')
+      })
+    })
   })
 })

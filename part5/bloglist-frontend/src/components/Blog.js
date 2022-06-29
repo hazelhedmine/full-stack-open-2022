@@ -51,7 +51,10 @@ const Blog = ({ user, blog, updateBlog, removeBlog }) => {
       <div className="togglableBlog" style={showWhenVisible}>
         <div>{blog.url}</div>
         <div className="blogLikes">
-          likes {blog.likes} <button onClick={handleLike}>like</button>
+          likes {blog.likes}{' '}
+          <button className="like-btn" onClick={handleLike}>
+            like
+          </button>
         </div>
         <div>{user.name}</div>
         <button onClick={handleRemove}>remove</button>
