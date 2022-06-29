@@ -55,7 +55,9 @@ const BlogForm = ({ user, addBlog }) => {
           required
         ></input>
       </div>
-      <button type="submit">create</button>
+      <button id="create-btn" type="submit">
+        create
+      </button>
     </form>
   )
 }
