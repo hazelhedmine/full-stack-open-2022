@@ -1,12 +1,11 @@
 describe('Blog app', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
+    cy.createUser({
       name: 'Matti Luukkainen',
       username: 'mluukkai',
       password: 'salainen',
-    }
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
+    })
     cy.visit('http://localhost:3000')
   })
 
@@ -75,6 +74,12 @@ describe('Blog app', function () {
         cy.get('.blogLikes').contains('likes 0')
         cy.get('.like-btn').click()
         cy.get('.blogLikes').contains('likes 1')
+      })
+
+      it('it can be deleted', function () {
+        cy.contains('another blog cypress').contains('view').click()
+        cy.contains('remove').click()
+        cy.get('.blog-list').should('not.contain', 'another blog cypress')
       })
     })
   })
