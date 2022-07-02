@@ -3,16 +3,19 @@ import { voteAnecdote } from '../reducers/anecdoteReducer'
 
 const Notes = () => {
   const dispatch = useDispatch()
-  const anecdotes = useSelector((state) => state)
+  const anecdotes = useSelector((state) => state.anecdotes)
 
   const vote = (id) => {
     console.log('vote', id)
     dispatch(voteAnecdote(id))
   }
 
+  // array (anecdotes) is frozen to prevent mutation of redux state,
+  // hence need to create a copy to mutate it
   return (
     <div>
       {anecdotes
+        .slice()
         .sort((a, b) => b.votes - a.votes)
         .map((anecdote) => (
           <div key={anecdote.id}>
