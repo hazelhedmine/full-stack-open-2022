@@ -7,7 +7,11 @@ import {
 
 const Notes = () => {
   const dispatch = useDispatch()
-  const anecdotes = useSelector((state) => state.anecdotes)
+  const anecdotes = useSelector((state) => {
+    return state.anecdotes.filter((anecdote) =>
+      anecdote.content.toLowerCase().includes(state.filter.toLowerCase())
+    )
+  })
 
   const vote = (id) => {
     console.log('vote', id)
