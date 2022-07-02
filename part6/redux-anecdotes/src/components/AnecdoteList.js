@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { voteAnecdote } from '../reducers/anecdoteReducer'
+import {
+  showNotification,
+  hideNotification,
+} from '../reducers/notificationReducer'
 
 const Notes = () => {
   const dispatch = useDispatch()
@@ -8,6 +12,12 @@ const Notes = () => {
   const vote = (id) => {
     console.log('vote', id)
     dispatch(voteAnecdote(id))
+    const anecdoteToVote = anecdotes.find((n) => n.id === id)
+    console.log('anecdoteToVote :>> ', anecdoteToVote)
+    dispatch(showNotification(`you voted for '${anecdoteToVote.content}'`))
+    setTimeout(() => {
+      dispatch(hideNotification())
+    }, 5000)
   }
 
   // array (anecdotes) is frozen to prevent mutation of redux state,
