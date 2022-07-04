@@ -16,6 +16,7 @@ const Notes = () => {
   const vote = (id) => {
     console.log('vote', id)
     dispatch(voteAnecdote(id))
+
     const anecdoteToVote = anecdotes.find((n) => n.id === id)
     console.log('anecdoteToVote :>> ', anecdoteToVote)
     dispatch(showNotification(`you voted for '${anecdoteToVote.content}'`))
