@@ -5,6 +5,7 @@ import {
   Route,
   Link,
   useParams,
+  useNavigate,
 } from 'react-router-dom'
 
 const AnecdoteList = ({ anecdotes }) => (
@@ -30,7 +31,9 @@ const Anecdote = ({ anecdotes }) => {
       </h2>
       <div>has {anecdote.votes} votes</div>
       <br></br>
-      <div>for more info see {anecdote.info}</div>
+      <div>
+        for more info see <a href={anecdote.info}>{anecdote.info}</a>
+      </div>
       <br></br>
     </div>
   )
@@ -74,6 +77,8 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
+  const navigate = useNavigate()
+
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
@@ -82,6 +87,11 @@ const CreateNew = (props) => {
       info,
       votes: 0,
     })
+    navigate('/')
+    props.setNotification(`${content} created!`)
+    setTimeout(() => {
+      props.setNotification('')
+    }, 5000)
   }
 
   return (
@@ -176,6 +186,8 @@ const App = () => {
           </Link>
         </div>
 
+        <div>{notification}</div>
+
         <Routes>
           <Route
             path="/"
@@ -183,7 +195,12 @@ const App = () => {
           ></Route>
           <Route
             path="/create"
-            element={<CreateNew addNew={addNew}></CreateNew>}
+            element={
+              <CreateNew
+                addNew={addNew}
+                setNotification={setNotification}
+              ></CreateNew>
+            }
           ></Route>
           <Route path="/about" element={<About></About>}></Route>
           <Route
