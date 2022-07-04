@@ -7,6 +7,12 @@ export const useField = (type) => {
     setValue(event.target.value)
   }
 
+  // doesnt cause error cause of onReset
+  // if using custom name etc reset
+  // then solve by doing
+  // <input {...content reset=""}>
+  // or
+  // const {reset: infoReset, ...info} = useField('info')
   const onReset = () => {
     setValue('')
   }
