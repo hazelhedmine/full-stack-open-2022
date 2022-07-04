@@ -23,12 +23,12 @@
     {
       "content": "Premature optimization is the root of all evil.",
       "id": "25170",
-      "votes": 10
+      "votes": 11
     },
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       "id": "98312",
-      "votes": 2
+      "votes": 4
     },
     {
       "content": "test creating anecdote",
@@ -39,6 +39,11 @@
       "content": "hello",
       "votes": 2,
       "id": "LkDrtYa"
+    },
+    {
+      "content": "testing connect component",
+      "votes": 0,
+      "id": "L86G1Xt"
     }
   ]
 }
