@@ -29,12 +29,27 @@ const notificationSlice = createSlice({
 
 export const { showNotification, hideNotification } = notificationSlice.actions
 
+// this method is for bug where timeout ends early when you spam it
+let timeoutID
+
+function setDelay(dispatch, time) {
+  timeoutID = setTimeout(() => {
+    dispatch(hideNotification())
+  }, time)
+}
+
+function clearDelay() {
+  clearTimeout(timeoutID)
+}
+
 export const setNotification = (text, time) => {
   return async (dispatch) => {
     dispatch(showNotification(text))
-    setTimeout(() => {
-      dispatch(hideNotification())
-    }, time * 1000)
+    // const timeoutID = setTimeout(() => {
+    //   dispatch(hideNotification())
+    // }, time * 1000)
+    clearDelay()
+    setDelay(dispatch, time * 1000)
   }
 }
 
