@@ -1,16 +1,40 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+} from 'react-router-dom'
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
       {anecdotes.map((anecdote) => (
-        <li key={anecdote.id}>{anecdote.content}</li>
+        <li key={anecdote.id}>
+          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+        </li>
       ))}
     </ul>
   </div>
 )
+
+const Anecdote = ({ anecdotes }) => {
+  const id = useParams().id
+  const anecdote = anecdotes.find((n) => n.id === Number(id))
+  return (
+    <div>
+      <h2>
+        {anecdote.content} by {anecdote.author}
+      </h2>
+      <div>has {anecdote.votes} votes</div>
+      <br></br>
+      <div>for more info see {anecdote.info}</div>
+      <br></br>
+    </div>
+  )
+}
 
 const About = () => (
   <div>
@@ -162,6 +186,10 @@ const App = () => {
             element={<CreateNew addNew={addNew}></CreateNew>}
           ></Route>
           <Route path="/about" element={<About></About>}></Route>
+          <Route
+            path="/anecdotes/:id"
+            element={<Anecdote anecdotes={anecdotes}></Anecdote>}
+          ></Route>
         </Routes>
       </Router>
       <Footer />
