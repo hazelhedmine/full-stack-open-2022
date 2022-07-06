@@ -6,3 +6,4 @@ This folder contains solutions to part 7 exercises.
 | ---------------- | --------- | ---- |
 | routed-anecdotes | 7.1 - 7.3 |      |
 | country-hook     | 7.7       |      |
+| ultimate-hooks   | 7.8       |      |
